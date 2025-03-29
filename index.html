@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học HTML - Level Up</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f9f9f9, #e6e6fa);
+            color: #333;
+        }
+        header {
+            background: #4b0082;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+            animation: slide 2s infinite alternate;
+        }
+        @keyframes slide {
+            from { transform: translateX(0); }
+            to { transform: translateX(10px); }
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #score {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        #level-title {
+            font-size: 22px;
+            margin-top: 20px;
+            color: #4b0082;
+        }
+        #level-desc {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #555;
+        }
+        #result {
+            font-size: 18px;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        footer {
+            margin-top: 30px;
+            padding: 10px;
+            background: #4b0082;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+        }
+        footer a {
+            color: #ffdd57;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>THAM GIA THỬ THÁCH LẬP TRÌNH WEB HTML CÙNG 12C</h1>
+    </header>
+    <main>
+        <h2 id="level-title">Level 1: Viết tiêu đề</h2>
+        <p id="level-desc">Viết một thẻ tiêu đề &lt;h1&gt; với nội dung "THAM GIA THỬ THÁCH LẬP TRÌNH WEB HTML CÙNG 12C"</p>
+        
+        <textarea id="codeInput"></textarea><br>
+        <button onclick="checkAnswer()">Nộp bài</button>
+        <p id="result"></p>
+        <p id="score"></p>
+    </main>
+    <footer>
+        &copy; 2025 Học HTML - Level Up. <a href="#">Điều khoản sử dụng</a> | <a href="#">Chính sách bảo mật</a>
+    </footer>
+
+    <script>
+        let levels = [
+            { desc: "Viết một thẻ tiêu đề <h1> với nội dung: Chào mừng các bạn 12C đến với khóa học HTML", answer: "<h1>Chào mừng đến với khóa học HTML</h1>" },
+            { desc: "Thêm hình ảnh có đường dẫn 'image.jpg'", answer: "<img src='image.jpg'>" },
+            { desc: "Tạo danh sách<ul><li>Mục 1</li><li>Mục 2</li></ul>", answer: "<ul><li>Mục 1</li><li>Mục 2</li></ul>" },
+            { desc: "Tạo bảng với 2 hàng và 2 cột", answer: "<table><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table>" },
+            { desc: "Thêm liên kết với nội dung 'Google' và đường dẫn 'https://google.com'", answer: "<a href='https://google.com'>Google</a>" }
+        ];
+        
+        let currentLevel = 0; // Bắt đầu từ Level 1
+        localStorage.setItem("level", currentLevel);
+
+        let score = 0; // Đặt điểm bắt đầu từ 0
+        localStorage.setItem("score", score);
+
+        let attempts = {}; // Đặt lại số lần thử cho từng câu
+
+        function loadLevel() {
+            document.getElementById("level-title").innerText = `Nhiệm vụ Level ${currentLevel + 1}`;
+            document.getElementById("level-desc").innerText = levels[currentLevel].desc;
+            document.getElementById("codeInput").value = ""; // Xóa đáp án cũ
+            document.getElementById("score").innerText = `Điểm: ${score} | Cúp: ${Math.floor(score / 10)}`;
+        }
+
+        function normalizeString(str) {
+            return str.replace(/\s+/g, '').toLowerCase(); // Bỏ dấu cách và chuyển về chữ thường
+        }
+
+        function checkAnswer() {
+            let userCode = normalizeString(document.getElementById("codeInput").value.trim());
+            let correctAnswer = normalizeString(levels[currentLevel].answer);
+
+            // Tăng số lần thử cho câu hiện tại
+            attempts[currentLevel] = (attempts[currentLevel] || 0) + 1;
+
+            if (userCode === correctAnswer) {
+                if (attempts[currentLevel] === 1) {
+                    score += 10; // Lần đầu đúng được 10 điểm
+                } else {
+                    score += 5; // Từ lần thứ 2 trở lên đúng được 5 điểm
+                }
+                localStorage.setItem("score", score);
+                document.getElementById("result").innerHTML = "🎉 Đúng rồi! Bạn đã mở khóa Level tiếp theo!";
+                currentLevel++;
+                localStorage.setItem("level", currentLevel);
+                localStorage.setItem("attempts", JSON.stringify(attempts)); // Lưu số lần thử
+                if (currentLevel < levels.length) {
+                    loadLevel();
+                } else {
+                    document.getElementById("result").innerHTML += " 🏆 Bạn đã hoàn thành khóa học!";
+                }
+            } else {
+                document.getElementById("result").innerHTML = "❌ Sai! Hãy thử lại!";
+                document.getElementById("result").style.color = "#dc3545"; // Đổi màu chữ khi sai
+            }
+            document.getElementById("score").innerText = `Điểm: ${score} | Cúp: ${Math.floor(score / 10)}`;
+        }
+
+        loadLevel();
+    </script>
+</body>
+</html>
