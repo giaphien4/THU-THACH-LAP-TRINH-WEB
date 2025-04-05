@@ -1,128 +1,72 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Học HTML - Level Up</title>
+    <title>HTML Learning Game</title>
     <style>
         body {
-            font-family: 'Roboto', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to bottom, #f9f9f9, #e6e6fa);
-            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
         }
-        header {
-            background: #4b0082;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 28px;
-            animation: slide 2s infinite alternate;
-        }
-        @keyframes slide {
-            from { transform: translateX(0); }
-            to { transform: translateX(10px); }
-        }
-        main {
-            max-width: 800px;
-            margin: 20px auto;
+        .container {
+            background-color: #fff;
             padding: 20px;
-            background: #fff;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
         }
         textarea {
             width: 100%;
-            height: 120px;
-            margin-top: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 10px;
-            font-size: 16px;
-            resize: none;
+            height: 100px;
+            margin-bottom: 20px;
         }
         button {
-            margin-top: 10px;
             padding: 10px 20px;
             font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #score {
-            margin-top: 20px;
-            font-size: 18px;
-            font-weight: bold;
-            color: #007bff;
-        }
-        #level-title {
-            font-size: 22px;
-            margin-top: 20px;
-            color: #4b0082;
-        }
-        #level-desc {
-            font-size: 18px;
-            margin: 10px 0;
-            color: #555;
         }
         #result {
+            margin-top: 20px;
             font-size: 18px;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #28a745;
         }
-        footer {
-            margin-top: 30px;
-            padding: 10px;
-            background: #4b0082;
-            color: #fff;
-            text-align: center;
-            font-size: 14px;
-        }
-        footer a {
-            color: #ffdd57;
-            text-decoration: none;
-        }
-        footer a:hover {
-            text-decoration: underline;
+        #score {
+            margin-top: 10px;
+            font-size: 16px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>THAM GIA THỬ THÁCH LẬP TRÌNH WEB HTML CÙNG 12C</h1>
-    </header>
-    <main>
-        <h2 id="level-title">Level 1: Viết tiêu đề</h2>
-        <p id="level-desc">Viết một thẻ tiêu đề &lt;h1&gt; với nội dung "THAM GIA THỬ THÁCH LẬP TRÌNH WEB HTML CÙNG 12C"</p>
-        
-        <textarea id="codeInput"></textarea><br>
-        <button onclick="checkAnswer()">Nộp bài</button>
-        <p id="result"></p>
-        <p id="score"></p>
-    </main>
-    <footer>
-        &copy; 2025 Học HTML - Level Up. <a href="#">Điều khoản sử dụng</a> | <a href="#">Chính sách bảo mật</a>
-    </footer>
-
+    <div class="container">
+        <h1 id="level-title">Nhiệm vụ Level 1</h1>
+        <p id="level-desc">Viết một thẻ tiêu đề <h1> với nội dung: Chào mừng các bạn 12C đến với khóa học HTML</p>
+        <textarea id="codeInput" placeholder="Nhập mã HTML của bạn ở đây..."></textarea>
+        <button onclick="checkAnswer()">Kiểm tra</button>
+        <div id="result"></div>
+        <div id="score">Điểm: 0 | Cúp: 0</div>
+    </div>
     <script>
         let levels = [
             { desc: "Viết một thẻ tiêu đề <h1> với nội dung: Chào mừng các bạn 12C đến với khóa học HTML", answer: "<h1>Chào mừng đến với khóa học HTML</h1>" },
             { desc: "Thêm hình ảnh có đường dẫn 'image.jpg'", answer: "<img src='image.jpg'>" },
             { desc: "Tạo danh sách<ul><li>Mục 1</li><li>Mục 2</li></ul>", answer: "<ul><li>Mục 1</li><li>Mục 2</li></ul>" },
             { desc: "Tạo bảng với 2 hàng và 2 cột", answer: "<table><tr><td>1</td><td>2</td></tr><tr><td>3</td><td>4</td></tr></table>" },
-            { desc: "Thêm liên kết với nội dung 'Google' và đường dẫn 'https://google.com'", answer: "<a href='https://google.com'>Google</a>" }
+            { desc: "Thêm liên kết với nội dung 'Google' và đường dẫn 'https://google.com'", answer: "<a href='https://google.com'>Google</a>" },
+            { desc: "Tạo liên kết mở trong tab mới với nội dung 'Facebook' và đường dẫn 'https://facebook.com'", answer: "<a href='https://facebook.com' target='_blank'>Facebook</a>" },
+            { desc: "Tạo bảng với 3 hàng và 3 cột, điền dữ liệu từ 1 đến 9", answer: "<table><tr><td>1</td><td>2</td><td>3</td></tr><tr><td>4</td><td>5</td><td>6</td></tr><tr><td>7</td><td>8</td><td>9</td></tr></table>" },
+            { desc: "Chèn video với đường dẫn 'video.mp4' và thêm thuộc tính tự động phát", answer: "<video src='video.mp4' autoplay></video>" },
+            { desc: "Thêm hình ảnh với đường dẫn 'avatar.jpg' và thuộc tính thay thế là 'Ảnh đại diện'", answer: "<img src='avatar.jpg' alt='Ảnh đại diện'>" },
+            { desc: "Tạo liên kết email với nội dung 'Liên hệ tôi' và địa chỉ email 'example@gmail.com'", answer: "<a href='mailto:example@gmail.com'>Liên hệ tôi</a>" }
         ];
         
         let currentLevel = 0; // Bắt đầu từ Level 1
